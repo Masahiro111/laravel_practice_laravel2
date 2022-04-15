@@ -250,10 +250,22 @@ Route::prefix('admin')
 
 `resources/views/admin` フォルダを作成し、`resources/views/auth` フォルダをコピーする。
 
-```
+```php
 resources
   | -  views
          | - auth (コピー元)
          | - admin (新規作成)
                   | - auth(コピー先)
+```
+
+18, route() 関数に admin を追記
+
+`resources/views/admin` フォルダ内のファイルに記載されている、route() 関数に `admin` を追記。全部に適応。
+
+例：
+
+```html
+<form method="POST" action="{{ route('register') }}">
+　　　　　　　　　　　　　　　　　　　　　　↓↓
+<form method="POST" action="{{ route('admin.register') }}">
 ```
