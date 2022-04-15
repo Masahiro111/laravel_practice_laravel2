@@ -260,7 +260,7 @@ resources
 
 18, route() 関数に admin を追記
 
-`resources/views/admin` フォルダ内のファイルに記載されている、route() 関数に `admin` を追記。全部に適応。
+`resources/views/admin` フォルダ内のファイルに記載されている、`route() 関数` と `Route::hasメソッド` に `admin` を追記。全部に適応。
 
 例：
 
@@ -268,4 +268,21 @@ resources
 <form method="POST" action="{{ route('register') }}">
 　　　　　　　　　　　　　　　　　　　　　　↓↓
 <form method="POST" action="{{ route('admin.register') }}">
+
+
+@if (Route::has('password.request'))
+　　　　　　　　　　↓↓
+@if (Route::has('admin.password.request'))
+```
+
+19,  Admin 用コントローラーの修正
+
+`app/Http/Controller/Admin/Auth` 内のコントローラーファイルすべてに記述されている view 関数に `admin` を追記。
+
+例：
+
+```php
+return view('auth.register');
+　　          ↓↓
+return view('admin.auth.register');
 ```
