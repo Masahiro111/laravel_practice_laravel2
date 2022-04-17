@@ -40,6 +40,10 @@ Route::prefix('admin')
 
         Route::middleware('auth:admin')->group(function () {
 
+            Route::get('/dashboard', function () {
+                return view('admin.dashboard');
+            })->name('dashboard');
+
             Route::get('verify-email', [EmailVerificationPromptController::class, '__invoke'])
                 ->name('verification.notice');
 

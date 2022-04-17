@@ -346,3 +346,101 @@ return redirect(RouteServiceProvider::HOME);
 return redirect(RouteServiceProvider::ADMIN_HOME);
 
 ```
+
+23, ダッシューボードページの作成
+
+admin 用のダッシュボードを作成。
+
+`routes\admin.php`
+
+```php
+Route::prefix('admin')
+    ->name('admin.')->group(function () {
+
+        // ...
+
+        Route::middleware('auth:admin')->group(function () {
+
+            Route::get('/dashboard', function () {
+                return view('admin.dashboard');
+            })->name('dashboard');
+
+            // ...
+```
+
+`views` フォルダの`dashboard.blade.php` をコピーして、`admin` フォルダにコピーする。
+
+```php
+resources
+  | -  views
+         | - dashboard.blade.php (コピー元)
+         | - admin
+                  | - dashboard.blade.php (コピー先)
+```
+
+コピーした `views/admin/dashboard.blade.php` を修正。
+
+```html
+<x-admin-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Dashboard') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 bg-white border-b border-gray-200">
+                    You're logged in for Admin!
+                </div>
+            </div>
+        </div>
+    </div>
+</x-admin-layout>
+```
+
+`app\View\Components` フォルダ内の `AppLayout.php` をコピーして、`AdminLayout.php` ファイルを作成及び修正。
+
+app\View\Components\AdminLayout.php
+
+```php
+namespace App\View\Components;
+
+use Illuminate\View\Component;
+
+class AdminLayout extends Component
+{
+    public function render()
+    {
+        return view('layouts.admin');
+    }
+}
+```
+
+`views/layouts/app.blade.php` ファイルをコピー。同フォルダに `admin.blade.php`として新規作成及び修正。
+
+```php
+@include('layouts.navigation')
+   　　　　　 ↓↓
+@include('layouts.admin_navigation')
+```
+
+`navigation.blade.php` ファイルをコピーして、`admin_navigation.blade.php` を作成。
+作成した `admin_navigation.blade.php` ファイルを編集。
+
+route() メソッドに `admin` を追加。また、routeIs メソッドにも `admin` を追加する。
+
+例
+
+```php
+<x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+    {{ __('Dashboard') }}
+</x-nav-link>
+
+↓↓
+
+<x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+    {{ __('Dashboard') }}
+</x-nav-link>
+```
