@@ -349,7 +349,7 @@ return redirect(RouteServiceProvider::ADMIN_HOME);
 
 23, ダッシューボードページの作成
 
-admin 用のダッシュボードを作成。
+- admin 用のダッシュボードを作成。
 
 `routes\admin.php`
 
@@ -368,7 +368,7 @@ Route::prefix('admin')
             // ...
 ```
 
-`views` フォルダの`dashboard.blade.php` をコピーして、`admin` フォルダにコピーする。
+- `views` フォルダの`dashboard.blade.php` をコピーして、`admin` フォルダにコピーする。
 
 ```php
 resources
@@ -378,7 +378,7 @@ resources
                   | - dashboard.blade.php (コピー先)
 ```
 
-コピーした `views/admin/dashboard.blade.php` を修正。
+- コピーした `views/admin/dashboard.blade.php` を修正。
 
 ```html
 <x-admin-layout>
@@ -400,7 +400,7 @@ resources
 </x-admin-layout>
 ```
 
-`app\View\Components` フォルダ内の `AppLayout.php` をコピーして、`AdminLayout.php` ファイルを作成及び修正。
+- `app\View\Components` フォルダ内の `AppLayout.php` をコピーして、`AdminLayout.php` ファイルを作成及び修正。
 
 app\View\Components\AdminLayout.php
 
@@ -418,7 +418,7 @@ class AdminLayout extends Component
 }
 ```
 
-`views/layouts/app.blade.php` ファイルをコピー。同フォルダに `admin.blade.php`として新規作成及び修正。
+- `views/layouts/app.blade.php` ファイルをコピー。同フォルダに `admin.blade.php`として新規作成及び修正。
 
 ```php
 @include('layouts.navigation')
@@ -426,10 +426,8 @@ class AdminLayout extends Component
 @include('layouts.admin_navigation')
 ```
 
-`navigation.blade.php` ファイルをコピーして、`admin_navigation.blade.php` を作成。
-作成した `admin_navigation.blade.php` ファイルを編集。
-
-route() メソッドに `admin` を追加。また、routeIs メソッドにも `admin` を追加する。
+- `navigation.blade.php` ファイルをコピーして、`admin_navigation.blade.php` を作成。
+作成した `admin_navigation.blade.php` ファイルを編集。route() メソッドに `admin` を追加。また、routeIs メソッドにも `admin` を追加する。
 
 例
 
@@ -443,4 +441,57 @@ route() メソッドに `admin` を追加。また、routeIs メソッドにも 
 <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
     {{ __('Dashboard') }}
 </x-nav-link>
+```
+
+24, ユーザ登録後のリダイレクト
+
+一度データベースを初期化
+
+```command
+php artisan migrate:refresh
+```
+
+25, admin 用画面からログインする設定
+
+`app\Http\Controllers\Admin\Auth\RegisteredUserController.php` を修正。
+
+```
+Auth::login($user);
+          ↓↓
+Auth::guard('admin')->login($user);
+```
+
+26, ログイン後のリダイレクト
+
+`app\Http\Middleware\RedirectIfAuthenticated.php` を修正
+
+```php
+public function handle(Request $request, Closure $next, ...$guards)
+{
+    $guards = empty($guards) ? [null] : $guards;
+
+    foreach ($guards as $guard) {
+        if (Auth::guard($guard)->check()) {
+            if($guard == 'admin') return redirect(RouteServiceProvider::ADMIN_HOME);
+            return redirect(RouteServiceProvider::HOME);
+        }
+    }
+
+    return $next($request);
+}
+```
+
+27, 未ログインのリダイレクト設定
+
+`app\Http\Middleware\Authenticate.php` の編集
+
+```php
+protected function redirectTo($request)
+{
+
+    if (! $request->expectsJson()) {
+        if($request->is('admin/*')) return route('admin.login');
+        return route('login');
+    }
+}
 ```
