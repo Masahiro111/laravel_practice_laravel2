@@ -129,8 +129,8 @@ config/auth.php
 
 ```
 routes
-  | -  auth.php （コピー元）
-  | -  admin.php (コピー先)
+  | -  auth.php 
+  | -  admin.php (new)
 ```
 
 admin.php
@@ -208,17 +208,4 @@ Route::middleware('auth:admin')->group(function () {
 require __DIR__.'/auth.php';
 
 require __DIR__.'/admin.php';
-```
-
-14, コントローラーの作成
-
-`app/Http/Controller/Auth` フォルダをコピーして、`app/Http/Controller/Admin` フォルダを新規作成して貼り付け。
-
-```
-app
-  | -  Http
-         | - Controller
-                  | - Auth (コピー元)
-                  | - Admin
-                        | - Auth（コピー先）
 ```
