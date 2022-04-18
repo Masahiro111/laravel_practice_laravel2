@@ -222,38 +222,3 @@ app
                   | - Admin
                         | - Auth（コピー先）
 ```
-
-15, Admin/Authフォルダ内ファイルの名前空間の修正
-
-名前空間の修正を行う
-
-```php
-namespace App\Http\Controllers\Admin\Auth;
-```
-
-16, admin.php に prefix と name メソッドの追加
-
-```php
-Route::prefix('admin')
-    ->name('admin.')->group(function () {
-
-        Route::middleware('guest:admin')->group(function () {
-            // ...
-        });
-
-        Route::middleware('auth:admin')->group(function () {
-            // ...
-    });
-```
-
-17, resources/views/admin フォルダの作成
-
-`resources/views/admin` フォルダを作成し、`resources/views/auth` フォルダをコピーする。
-
-```
-resources
-  | -  views
-         | - auth (コピー元)
-         | - admin (新規作成)
-                  | - auth(コピー先)
-```
