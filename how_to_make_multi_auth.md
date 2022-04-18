@@ -520,7 +520,7 @@ class AuthenticatedSessionController extends Controller
 }
 ```
 
-29, ログイン後の対応
+29, ログインの対応
 
 `/admin/login` からのログイン対応。`app\Http\Controllers\Admin\Auth\AuthenticatedSessionController.php` を編集。`redirect()->intended(RouteServiceProvider::HOME)` を `return redirect()->intended(RouteServiceProvider::ADMIN_HOME)` に変更。
 
@@ -535,27 +535,4 @@ class AuthenticatedSessionController extends Controller
 
         return redirect()->intended(RouteServiceProvider::ADMIN_HOME);
     }
-```
-
-30, 管理者に認証を適応
-
-通常のユーザーと管理者との認証を分別するために、`app\Http\Requests\Auth\LoginRequest.php` の authenticate アクションを編集。
-
-```php
-public function authenticate()
-{
-    $this->ensureIsNotRateLimited();
-
-    $this->is('admin/*') ? $guard = 'admin' : $guard = 'web';
-
-    if (! Auth::guard($guard)->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
-        RateLimiter::hit($this->throttleKey());
-
-        throw ValidationException::withMessages([
-            'email' => trans('auth.failed'),
-        ]);
-    }
-
-    RateLimiter::clear($this->throttleKey());
-}
 ```
