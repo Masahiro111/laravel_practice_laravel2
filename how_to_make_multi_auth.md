@@ -324,25 +324,3 @@ php artisan コマンドでデータベースを一度リセットして、`/adm
 ```command
 php artisan migrate:refresh
 ```
-
-22, ダッシュボードへのリダイレクト設定
-
-`RouteServiceProvider.php` に管理者用の定数を追加。
-
-```php
-class RouteServiceProvider extends ServiceProvider
-{
-    public const HOME = '/dashboard';
-    public const ADMIN_HOME = '/admin/dashboard';
-
-    // ...
-```
-
-`app\Http\Controllers\Admin\Auth\RegisteredUserController.php` を編集。
-
-```php
-return redirect(RouteServiceProvider::HOME);
-                                       ↓
-return redirect(RouteServiceProvider::ADMIN_HOME);
-
-```
