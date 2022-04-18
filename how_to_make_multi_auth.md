@@ -559,7 +559,3 @@ public function authenticate()
     RateLimiter::clear($this->throttleKey());
 }
 ```
-
-
-31, パスワードリセットの設定
-
