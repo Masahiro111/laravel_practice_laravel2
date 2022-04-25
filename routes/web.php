@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,13 +23,15 @@ Route::get('/', function () {
 
 Route::get('/test', [TestController::class, 'index']);
 
+Route::get('/user', [UserController::class, 'index']);
+
 // Route::get('/user/{id}', function ($id) {
 //     return 'User' . $id;
 // });
 
-Route::get('/user/{name?}', function ($name = null) {
-    return 'User' . $name;
-});
+// Route::get('/user/{name?}', function ($name = null) {
+//     return 'User' . $name;
+// });
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
