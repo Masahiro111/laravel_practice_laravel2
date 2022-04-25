@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,8 +18,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Route::view('/test', 'test');
 
-require __DIR__.'/auth.php';
+Route::get('/test', [TestController::class, 'index']);
+
+// Route::get('/user/{id}', function ($id) {
+//     return 'User' . $id;
+// });
+
+Route::get('/user/{name?}', function ($name = null) {
+    return 'User' . $name;
+});
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
+
+// require __DIR__.'/auth.php';
