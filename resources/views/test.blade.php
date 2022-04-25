@@ -9,12 +9,7 @@
     </head>
 
     <body>
-        <p>hello</p>
-        <div>
-            @foreach ($users as $user)
-            <p>{{ $user->name }}</p>
-            @endforeach
-        </div>
+        hello {{ $data }}
     </body>
 
 </html>
