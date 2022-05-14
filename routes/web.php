@@ -25,10 +25,4 @@ Route::get('/dashboard', function () {
 Route::get('/hello', [HelloController::class, 'index'])
     ->name('hello.index');
 
-Route::get('/hello/view', [HelloController::class, 'view'])
-    ->name('hello.view');
-
-Route::get('/hello/list', [HelloController::class, 'list'])
-    ->name('hello.list');
-
 require __DIR__ . '/auth.php';
