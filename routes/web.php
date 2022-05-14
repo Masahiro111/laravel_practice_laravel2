@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\HelloController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +21,4 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/hello', [HelloController::class, 'index'])
-    ->name('hello.index');
-
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
