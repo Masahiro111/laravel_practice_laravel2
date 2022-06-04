@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\RouteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +21,4 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__ . '/auth.php';
-
-Route::get('/post/{id}/edit', [RouteController::class, 'test']);
+require __DIR__.'/auth.php';
