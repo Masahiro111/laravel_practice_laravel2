@@ -10,8 +10,8 @@
     <h1 class="text-2xl">Laravel Componets</h1>
     <p class="text-sm text-gray-400">message: {{ $message }}</p>
 
-    <x-alert
-             :message="$message"
-             class="font-bold"
-             type="info" />
+    <x-alert :message="$message">
+        hello
+    </x-alert>
+
 </x-app>
