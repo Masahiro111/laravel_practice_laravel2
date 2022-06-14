@@ -14,7 +14,7 @@ class Alert extends Component
      *
      * @return void
      */
-    public function __construct($message = "初期データです")
+    public function __construct($message = "")
     {
         $this->message = $message;
     }
