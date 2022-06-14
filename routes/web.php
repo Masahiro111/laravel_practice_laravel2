@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,12 +21,4 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__ . '/auth.php';
-
-
-Route::get('/register', [RegisterController::class, 'create'])
-    ->middleware('guest')
-    ->name('register');
-
-Route::post('/register', [RegisterController::class, 'store'])
-    ->middleware('guest');
+require __DIR__.'/auth.php';
