@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome', ['message' => "これはルートからのメッセージだお(=ﾟωﾟ)ﾉ"]);
+    return view('welcome', ['message' => "これはアラートメッセージだお(=ﾟωﾟ)ﾉ"]);
 });
 
 Route::get('/dashboard', function () {
